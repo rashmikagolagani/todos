@@ -1,0 +1,10 @@
+{
+  "todos": [
+    {
+      "id": "5d4e",
+      "task": "Example todo",
+      "completed": true,
+      "createdOn": "2025-02-20T11:17:26.703Z"
+    }
+  ]
+}
