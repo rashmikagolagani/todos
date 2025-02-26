@@ -1,31 +1,40 @@
 import React from "react";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import TodoItems from "./Todoitems";
 
 export default function Todo() {
   const [todoList, setTodoList] = useState([]);
-  const inputRef = useRef();
-  function add() {
-    const inputText = inputRef.current.value.trim();
+  const [inputText, setInputText] = useState("");
 
-    if (inputText === "") {
+  function add() {
+    const trimmedText = inputText.trim();
+    console.log(trimmedText);
+
+    if (trimmedText === "") {
       return null;
     }
     const newTodo = {
       id: Date.now(),
-      text: inputText,
+      text: trimmedText,
       isComplete: false,
     };
     setTodoList((previous) => [...previous, newTodo]);
-    inputRef.current.value = "";
+    setInputText("");
   }
   return (
     <div>
       <div>
         <h2>To-Do list</h2>
-        <input ref={inputRef} type="text"></input>
-        <button onClick={add}>add</button>
+        <input
+          className="inputbox"
+          type="text"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+        />
+        <button className="button" onClick={add}>
+          add
+        </button>
       </div>
       <div>
         {todoList.map((item, index) => {
