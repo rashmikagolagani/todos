@@ -1,25 +1,37 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./App.css";
+import TodoItems from "./Todoitems";
 
 export default function Todo() {
-  // const [tasks, setTasks] = useState("");
+  const [todoList, setTodoList] = useState([]);
+  const inputRef = useRef();
+  function add() {
+    const inputText = inputRef.current.value.trim();
 
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  // }
+    if (inputText === "") {
+      return null;
+    }
+    const newTodo = {
+      id: Date.now(),
+      text: inputText,
+      isComplete: false,
+    };
+    setTodoList((previous) => [...previous, newTodo]);
+    inputRef.current.value = "";
+  }
   return (
     <div>
-      <h2>To-Do list</h2>
-      {/* <form onSubmit={handleSubmit}> */}
-      <input
-        type="text"
-        // value={tasks}
-        // onChange={(e) => setTasks(e.target.value)}
-        // required
-      ></input>
-      <button type="submit">add</button>
-      {/* </form> */}
+      <div>
+        <h2>To-Do list</h2>
+        <input ref={inputRef} type="text"></input>
+        <button onClick={add}>add</button>
+      </div>
+      <div>
+        {todoList.map((item, index) => {
+          return <TodoItems key={index} text={item.text} />;
+        })}
+      </div>
     </div>
   );
 }
