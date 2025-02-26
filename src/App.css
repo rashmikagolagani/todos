@@ -40,3 +40,22 @@
 .read-the-docs {
   color: #888;
 }
+.button{
+  background-color: rgb(21, 154, 243);
+  border-radius: 20px;
+  color: white;
+}
+.inputbox{
+  margin-right: 5px;
+  height: 30px;
+  border-width: 5px;
+  border-color: black;
+  width: 250px;
+  border-radius: 5px;
+}
+.edit{
+  color: maroon;
+}
+.checkbox{
+  margin-right: 5px;
+}
