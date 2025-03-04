@@ -16,7 +16,6 @@ export default function DeleteConfirmation({ isOpen, onConfirm, onCancel }) {
   return (
     <div className="popup">
       <div className="popup-content">
-        <h3>Confirm Delete</h3>
         <p>Are you sure you want to delete this todo?</p>
         <button className="yes-button" onClick={onConfirm}>
           Yes
