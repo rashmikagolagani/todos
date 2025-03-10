@@ -18,3 +18,12 @@ close the dialog
 save button click
 put API call
 on success close the dialog
+
+check box
+state is click or not (boolean value)true/false
+when state gets updated we have to put an overline over the text
+
+onUpdate is passed as a prop
+to the EditTodo component
+from its parent component
+(Todo).
