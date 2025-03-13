@@ -5,7 +5,7 @@ import { Trash2 } from "lucide-react";
 export function DeleteTodo({ onDelete }) {
   return (
     <button className="delete-button" onClick={() => onDelete()}>
-      <Trash2 />
+      <Trash2 className="bin" />
     </button>
   );
 }
