@@ -2,12 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import TodoItems from "./Todoitems";
-//import DeleteConfirmation from "./DeleteTodo";
 
 export default function Todo() {
   const [todoList, setTodoList] = useState([]);
   const [inputText, setInputText] = useState("");
-  // const [deleteId, setDeleteId] = useState(null);
   const createUserApi = "http://localhost:3000/todos";
 
   useEffect(() => {
@@ -24,7 +22,7 @@ export default function Todo() {
       return null;
     }
     const newTodo = {
-      id: Date.now(),
+      id: Date.now().toString(),
       text: trimmedText,
       Completed: true,
     };
@@ -45,58 +43,50 @@ export default function Todo() {
         setTodoList((previous) => [...previous, newTodo]);
         setInputText("");
       });
-    // function confirmDelete(id) {
-    //   setDeleteId(id);
-    // }
-
-    // function handleDelete() {
-    //   if (!deleteId) return;
-
-    //   fetch(`${createUserApi}/${deleteId}`, {
-    //     method: "DELETE",
-    //   })
-    //     .then((response) => {
-    //       if (!response.ok) throw new Error("Failed to delete");
-    //       return response.json();
-    //     })
-    //     .then(() => {
-    //       setTodoList((prev) => prev.filter((todo) => todo.id !== deleteId));
-    //       setDeleteId(null);
-    //     })
-    //     .catch((error) => console.error("Error deleting todo:", error));
-    // }
-
-    return (
-      <div>
-        <div>
-          <h2>To-Do list</h2>
-          <input
-            className="inputbox"
-            type="text"
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-          />
-          <button className="button" onClick={add}>
-            add
-          </button>
-        </div>
-        <div>
-          {todoList.map((item, index) => {
-            return (
-              <TodoItems
-                key={index}
-                text={item.text}
-                // onDelete={confirmDelete}
-              />
-            );
-          })}
-        </div>
-        {/* <DeleteConfirmation
-          isOpen={deleteId !== null}
-          onConfirm={handleDelete}
-          onCancel={() => setDeleteId(null)}
-        /> */}
-      </div>
+  }
+  function deleteTodo(id) {
+    console.log("rash", id);
+    fetch(`http://localhost:3000/todos/${id}`, { method: "DELETE" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to delete");
+        return response.json();
+      })
+      .then(() => {
+        setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+      })
+      .catch((error) => console.error("Error deleting todo:", error));
+  }
+  function updateTodo(updatedTodo) {
+    setTodoList((prev) =>
+      prev.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo))
     );
   }
+  return (
+    <div>
+      <div>
+        <h2>To-Do list</h2>
+        <input
+          className="inputbox"
+          type="text"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+        />
+        <button className="button" onClick={add}>
+          add
+        </button>
+      </div>
+      <div className="todo-item">
+        {todoList.map((todo) => {
+          return (
+            <TodoItems
+              key={todo.id}
+              todo={todo}
+              onDelete={deleteTodo}
+              onUpdate={updateTodo}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
 }
